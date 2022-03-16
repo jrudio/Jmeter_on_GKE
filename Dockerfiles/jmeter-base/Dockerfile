@@ -1,7 +1,7 @@
-FROM openjdk:8-jdk-slim
-MAINTAINER kartik16
+FROM openjdk:19-jdk-slim
+LABEL maintainer=jrudio
 
-ARG JMETER_VERSION=5.0
+ARG JMETER_VERSION=5.4.3
 
 RUN apt-get clean && \
 apt-get update && \
@@ -17,8 +17,8 @@ RUN   mkdir /jmeter \
 && tar -xzf apache-jmeter-$JMETER_VERSION.tgz \
 && rm apache-jmeter-$JMETER_VERSION.tgz
 
-RUN cd /jmeter/apache-jmeter-$JMETER_VERSION/ && wget -q -O /tmp/JMeterPlugins-Standard-1.4.0.zip https://jmeter-plugins.org/downloads/file/JMeterPlugins-Standard-1.4.0.zip && unzip -n /tmp/JMeterPlugins-Standard-1.4.0.zip && rm /tmp/JMeterPlugins-Standard-1.4.0.zip
+ENV JMETER_HOME /jmeter/apache-jmeter-$JMETER_VERSION
 
-ENV JMETER_HOME /jmeter/apache-jmeter-$JMETER_VERSION/
+RUN cd ${JMETER_HOME} && wget -q -O /tmp/JMeterPlugins-Standard-1.4.0.zip https://jmeter-plugins.org/downloads/file/JMeterPlugins-Standard-1.4.0.zip && unzip -n /tmp/JMeterPlugins-Standard-1.4.0.zip && rm /tmp/JMeterPlugins-Standard-1.4.0.zip
 
 ENV PATH $JMETER_HOME/bin:$PATH

@@ -1,0 +1,81 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    labels:
+        app: influxdb
+    name: influxdb
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: influxdb
+    serviceName: influxdb
+    template:
+        metadata:
+            labels:
+                app: influxdb
+        spec:
+            containers:
+              - image: influxdb:2.0.6
+                name: influxdb
+                env:
+                  # - name: INFLUXD_LOG_LEVEL
+                  #   value: "debug"
+                ports:
+                  - containerPort: 8086
+                    name: influxdb
+                volumeMounts:
+                  - mountPath: /var/lib/influxdb2
+                    name: data
+    volumeClaimTemplates:
+      - metadata:
+            name: data
+            namespace: influxdb
+        spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+                requests:
+                    storage: 10G
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: influxdb
+spec:
+    ports:
+      - name: influxdb
+        port: 8086
+        targetPort: 8086
+    selector:
+        app: influxdb
+    type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: influxdb-test
+spec:
+  capacity:
+    storage: 10Gi
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  gcePersistentDisk:
+    pdName: influxdb-test
+    fsType: ext4
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: influxdb-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: influxdb-test
