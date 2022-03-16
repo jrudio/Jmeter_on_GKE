@@ -1,4 +1,4 @@
-FROM jrudio/jmeter-base:latest
+FROM jrudio/jmeter-base:v0.0.1
 
 LABEL maintainer=jrudio
 
