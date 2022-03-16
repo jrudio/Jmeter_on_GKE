@@ -1,4 +1,4 @@
-FROM jrudio/jmeter-base:v0.0.1
+FROM jrudio/jmeter-base:v1
 
 LABEL maintainer=jrudio
 
@@ -12,5 +12,5 @@ EXPOSE 60000
 RUN apt-get update && apt-get -qy install tightvncserver dbus-x11
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qy install xfce4 xfce4-goodies
 
-# Download JMeter pluging listener for InfluxDB
-RUN wget $JMETER_INFLUXDB_PLUGIN_URL -o ${JMETER_HOME}/lib/ext/jmeter-plugin-influxdb2-listener-${JMETER_INFLUXDB_PLUGIN_VERSION}-all.jar
+# Download JMeter plugin listener for InfluxDB
+RUN cd ${JMETER_HOME}/lib/ext && wget $JMETER_INFLUXDB_PLUGIN_URL
