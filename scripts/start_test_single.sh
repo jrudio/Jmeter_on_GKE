@@ -21,10 +21,14 @@ for ctx in $(kubectl config get-contexts -o=name --kubeconfig $working_dir/clust
 
   master_pod=`kubectl --kubeconfig $working_dir/clusters.yaml --context="${ctx}" get po | grep jmeter-master | awk '{print $1}'`
 
-  kubectl --kubeconfig $working_dir/clusters.yaml --context="${ctx}" cp $jmx $master_pod:/$jmx
+  echo "copying '$jmx' to master pod '$master_pod' to directory /jmeter/$jmx..."
+
+  kubectl --kubeconfig $working_dir/clusters.yaml --context="${ctx}" cp $jmx $master_pod:/jmeter/$jmx
 
   ## Echo Starting Jmeter load test
 
-  kubectl --kubeconfig $working_dir/clusters.yaml --context="${ctx}" exec -it $master_pod -- /jmeter/load_test $jmx
+  echo "starting jmeter load test on master pod: $master_pod..."
+
+  kubectl --kubeconfig $working_dir/clusters.yaml --context="${ctx}" exec -it $master_pod -- bash /jmeter/load_test /jmeter/$jmx
 
 done
