@@ -3,7 +3,13 @@ steps:
   args: [ 'build', '-t', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/jmeter-master:v1', 'Dockerfiles/jmeter-master' ]
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY/jmeter-worker:v1', 'Dockerfiles/jmeter-worker' ]
-images: [
+# - name: "gcr.io/cloud-builders/gke-deploy"
+#   args:
+#   - run
+#   - --filename=manifests
+#   - --location=${_LOCATION}
+#   - --cluster=${_CLUSTER}
+  images: [
   '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/jmeter-master:v1',
   '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/jmeter-worker:v1'
   ]
