@@ -10,20 +10,6 @@ spec:
     requests:
       storage: 1Gi
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: grafana
-spec:
-  capacity:
-    storage: 50Gi
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  gcePersistentDisk:
-    pdName: grafana
-    fsType: ext4
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
