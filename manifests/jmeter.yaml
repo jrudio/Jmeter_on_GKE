@@ -32,6 +32,7 @@ spec:
       containers:
       - name: jmeter-master
         image: jrudio/jmeter-master:v1
+        imagePullPolicy: Always
         env:
         resources:
           requests:
