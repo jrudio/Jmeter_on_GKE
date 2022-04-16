@@ -63,7 +63,7 @@ metadata:
   labels:
     jmeter_mode: worker
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       jmeter_mode: worker

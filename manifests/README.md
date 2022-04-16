@@ -15,7 +15,7 @@
     ``` -->
   - Running vncserver setup/configurations in the Dockerfile results in bad spawn of vncserver - '81d87c1374ab:1.pid'
   - This gives a gray screen upon connecting over vnc
-  - set password in Dockerfile; container startup turn on vncserver if not already started
+  - Workaround: set password in Dockerfile; on container startup turn on vncserver if not already started
   - `apt install -y expect && touch /root/.Xresources`
 
   [1] https://wiki.parabola.nu/TightVNC - 6.3 Window manager issues
